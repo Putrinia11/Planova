@@ -47,6 +47,286 @@ function showMessage(message, type) {
     loginMessage.className = "login-message " + type;
 }
 
+/* ==========================================
+   PLANOVA DEMO DATA
+========================================== */
+
+function seedPlanovaDemoData() {
+
+    // Get today's date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Generate dates based on today
+    function dateOffset(days) {
+        const date = new Date(today);
+        date.setDate(date.getDate() + days);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+    // ==========================================
+    // 1. DEMO TASKS
+    // ==========================================
+
+    const demoTasks = [
+
+        {
+            id: "demo-001",
+            title: "Complete Information Systems Assignment",
+            description: "Finalize the written report and review all references before submission.",
+            category: "Academic",
+            dueDate: dateOffset(2),
+            priority: "High",
+            status: "In Progress",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-002",
+            title: "Prepare Presentation Slides",
+            description: "Prepare presentation slides and organise important points for the group presentation.",
+            category: "Academic",
+            dueDate: dateOffset(4),
+            priority: "High",
+            status: "Pending",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-003",
+            title: "Read Chapter 5 Notes",
+            description: "Review lecture notes and highlight important concepts for revision.",
+            category: "Academic",
+            dueDate: dateOffset(-1),
+            priority: "Medium",
+            status: "Completed",
+            completedAt: new Date(today.getTime() - 86400000).toISOString()
+        },
+
+        {
+            id: "demo-004",
+            title: "Pay Monthly Phone Bill",
+            description: "Check the monthly bill and complete the payment.",
+            category: "Personal",
+            dueDate: dateOffset(1),
+            priority: "Medium",
+            status: "Pending",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-005",
+            title: "Buy Groceries",
+            description: "Purchase milk, bread, eggs and other household essentials.",
+            category: "Shopping",
+            dueDate: dateOffset(3),
+            priority: "Low",
+            status: "Pending",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-006",
+            title: "Update Project Documentation",
+            description: "Review project documentation and organise the latest files.",
+            category: "Work",
+            dueDate: dateOffset(5),
+            priority: "Medium",
+            status: "In Progress",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-007",
+            title: "Submit Tutorial Exercise",
+            description: "Complete all tutorial questions and upload the exercise.",
+            category: "Academic",
+            dueDate: dateOffset(-2),
+            priority: "High",
+            status: "Pending",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-008",
+            title: "Organise Study Desk",
+            description: "Arrange books, stationery and study materials.",
+            category: "Personal",
+            dueDate: dateOffset(-3),
+            priority: "Low",
+            status: "Completed",
+            completedAt: new Date(today.getTime() - 2 * 86400000).toISOString()
+        },
+
+        {
+            id: "demo-009",
+            title: "Group Discussion Meeting",
+            description: "Discuss task allocation and review each group member's progress.",
+            category: "Academic",
+            dueDate: dateOffset(1),
+            priority: "High",
+            status: "In Progress",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-010",
+            title: "Plan Weekly Schedule",
+            description: "Organise study sessions, personal errands and relaxation time.",
+            category: "Personal",
+            dueDate: dateOffset(6),
+            priority: "Low",
+            status: "Pending",
+            completedAt: ""
+        },
+
+        {
+            id: "demo-011",
+            title: "Review Project Feedback",
+            description: "Read the lecturer's feedback and identify improvements needed.",
+            category: "Work",
+            dueDate: dateOffset(-4),
+            priority: "Medium",
+            status: "Completed",
+            completedAt: new Date(today.getTime() - 3 * 86400000).toISOString()
+        },
+
+        {
+            id: "demo-012",
+            title: "Back Up Important Files",
+            description: "Organise and back up important assignment documents and project files.",
+            category: "Others",
+            dueDate: dateOffset(7),
+            priority: "Medium",
+            status: "Pending",
+            completedAt: ""
+        }
+
+    ];
+
+    // Save demo tasks if storage is empty
+    if (!localStorage.getItem("taskflowTasks")) {
+        localStorage.setItem(
+            "taskflowTasks",
+            JSON.stringify(demoTasks)
+        );
+    }
+
+
+    // ==========================================
+    // 2. DEMO CATEGORIES
+    // ==========================================
+
+    const demoCategories = [
+
+        {
+            name: "Academic",
+            icon: "bi-book"
+        },
+
+        {
+            name: "Personal",
+            icon: "bi-person-heart"
+        },
+
+        {
+            name: "Work",
+            icon: "bi-briefcase"
+        },
+
+        {
+            name: "Shopping",
+            icon: "bi-basket"
+        },
+
+        {
+            name: "Others",
+            icon: "bi-folder"
+        }
+
+    ];
+
+    if (!localStorage.getItem("taskflowCategories")) {
+        localStorage.setItem(
+            "taskflowCategories",
+            JSON.stringify(demoCategories)
+        );
+    }
+
+
+    // ==========================================
+    // 3. DEMO RECENT ACTIVITIES
+    // ==========================================
+
+    const demoActivities = [
+
+        {
+            action: "Updated task",
+            title: "Review Project Feedback",
+            date: new Date(today.getTime() - 3 * 86400000).toISOString()
+        },
+
+        {
+            action: "Added task",
+            title: "Back Up Important Files",
+            date: new Date(today.getTime() - 2 * 3600000).toISOString()
+        },
+
+        {
+            action: "Updated task",
+            title: "Organise Study Desk",
+            date: new Date(today.getTime() - 86400000).toISOString()
+        },
+
+        {
+            action: "Added task",
+            title: "Group Discussion Meeting",
+            date: new Date(today.getTime() - 5 * 3600000).toISOString()
+        },
+
+        {
+            action: "Updated task",
+            title: "Read Chapter 5 Notes",
+            date: new Date(today.getTime() - 12 * 3600000).toISOString()
+        }
+
+    ];
+
+    if (!localStorage.getItem("taskflowActivities")) {
+        localStorage.setItem(
+            "taskflowActivities",
+            JSON.stringify(demoActivities)
+        );
+    }
+
+
+    // ==========================================
+    // 4. DEMO USER PROFILE
+    // ==========================================
+
+    const demoProfile = {
+
+        fullName: "Putri Nia Sara",
+        username: "admin",
+        email: "putriniasara@gmail.com",
+        phone: "+60 11-6555 22900"
+
+    };
+
+    if (!localStorage.getItem("taskflowProfile")) {
+        localStorage.setItem(
+            "taskflowProfile",
+            JSON.stringify(demoProfile)
+        );
+    }
+
+}
+
 // Login form validation
 if (loginForm) {
     loginForm.addEventListener("submit", function (event) {
@@ -60,6 +340,9 @@ if (loginForm) {
         username === correctUsername &&
         password === correctPassword
     ) {
+
+        seedPlanovaDemoData();
+
         // Remember username only (never save the password)
         if (rememberMe.checked) {
             localStorage.setItem("taskflowUsername", username);
